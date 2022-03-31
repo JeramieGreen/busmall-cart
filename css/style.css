@@ -1,1 +1,11 @@
 /* TODO: Make it awesome */
+header {
+  background-color: aqua;
+}
+body {
+  background-color: bisque;
+}
+section {
+  background-color: blue;
+  border: 5px solid black;
+}
