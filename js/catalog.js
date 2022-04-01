@@ -30,8 +30,6 @@ function handleSubmit(event) {
   updateCounter();
   cart.saveToLocalStorage();
   updateCartPreview(cart.items[cart.items.length - 1]);
-
-  event.target.reset();
 }
 let runningTotal = 0;
 // TODO: Add the selected item and quantity to the cart
