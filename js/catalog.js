@@ -11,34 +11,65 @@ function populateForm() {
   //TODO: Add an <option> tag inside the form's select for each product
   const selectElement = document.getElementById('items');
   for (let i in Product.allProducts) {
+    const optionTag = document.createElement('option');
+    optionTag.value = Product.allProducts[i].name;
+    optionTag.textContent = Product.allProducts[i].name;
+    selectElement.appendChild(optionTag);
   }
 }
-
+console.log(Product.allProducts[0].name);
 // When someone submits the form, we need to add the selected item to the cart
 // object, save the whole thing back to local storage and update the screen
 // so that it shows the # of items in the cart and a quick preview of the cart itself.
 function handleSubmit(event) {
   // TODO: Prevent the page from reloading
+  event.preventDefault();
 
   // Do all the things ...
   addSelectedItemToCart();
-  cart.saveToLocalStorage();
   updateCounter();
-  updateCartPreview();
+  cart.saveToLocalStorage();
+  updateCartPreview(cart.items[cart.items.length - 1]);
 }
-
+let runningTotal = 0;
 // TODO: Add the selected item and quantity to the cart
 function addSelectedItemToCart() {
   // TODO: suss out the item picked from the select list
   // TODO: get the quantity
   // TODO: using those, add one item to the Cart
+  let getItem = document.getElementById('items').value;
+
+  let getQuantity = document.getElementById('quantity').value;
+  let parsedQuantity = parseInt(getQuantity);
+  cart.addItem(getItem, parsedQuantity);
+  runningTotal += parsedQuantity;
 }
 
 // TODO: Update the cart count in the header nav with the number of items in the Cart
-function updateCounter() {}
+function updateCounter() {
+  let update = document.getElementById('itemCount');
+
+  // let cartTotal = 0;
+  // for (let i = 0; i <= cart.items.length; i++) {
+  //   cartTotal += cart.items[i];
+  // }
+  update.textContent = runningTotal;
+}
+console.log(cart);
 
 // TODO: As you add items into the cart, show them (item & quantity) in the cart preview div
-function updateCartPreview() {
+function updateCartPreview(item) {
+  let itemProduct = item.product;
+  let quantityProduct = item.quantity;
+  let preview = document.getElementById('cartContents');
+
+  let newUl = document.createElement('ul');
+  preview.appendChild(newUl);
+  let newLi = document.createElement('li');
+  newUl.appendChild(newLi);
+  newLi.textContent = itemProduct + '--' + quantityProduct;
+  preview.appendChild(newLi);
+
   // TODO: Get the item and quantity from the form
   // TODO: Add a new element to the cartContents div with that information
 }
